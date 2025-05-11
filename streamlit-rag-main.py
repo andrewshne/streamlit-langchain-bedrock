@@ -1,6 +1,6 @@
 # ------------------------------------------------------
 # Streamlit
-# Ruby 💎 V0.0.10
+# Streamlit chatbot
 # ------------------------------------------------------
 # ------------!
 # Streamlit imports
@@ -10,6 +10,6 @@ import streamlit as st
 # Streamlit
 
 # Page title
-st.set_page_config(page_title="Ruby 💎 V0.0.10")
+st.set_page_config(page_title="Streamlit chatbot")
 
-st.write("Welcome to RUBY 💎 Please Choose from the side bar!")
+st.write("Welcome to Streamlit Chatbot Please Choose from the side bar!")

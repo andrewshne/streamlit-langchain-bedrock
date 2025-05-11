@@ -7,3 +7,4 @@ langchain_aws
 langchain_community
 streamlit-chat==0.0.2.2
 streamlit-extras==0.2.7
+python-dotenv

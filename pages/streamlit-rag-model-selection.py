@@ -1,6 +1,6 @@
 # ------------------------------------------------------
 # Streamlit
-# Ruby 💎 V0.0.10 - Multi Selection
+# Streamlit chatbot Multi Selection
 # ------------------------------------------------------
 # ------------!
 # LangChain imports
@@ -9,6 +9,8 @@ from langchain_community.callbacks.manager import get_bedrock_anthropic_callback
 # ------------!
 # Misc imports
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 import io  # For report file read/write
 
 # ------------!
@@ -31,6 +33,9 @@ from streamlit_chat import message
 # Date time var
 dt = datetime.now()
 
+# load .env file
+load_dotenv()
+
 # Citations and context init arrays
 citations_page_content = {}
 citations_metadata_s3_uri = {}
@@ -43,8 +48,12 @@ citations_metadata = {}
 # Region vars
 region_name = "us-east-1"
 
+
+# Global variables, either from .env or default hardcoded local file path
+EXTRACTED_KB_ID = os.getenv("EXTRACTED_KB_ID", "<ENTER PATH TO YOUR EXTRACTED KB ID>")
+
 # Read file of kb_id
-with open("C:\MOL\Sapphire-Terraform\data\extracted_kb_id.txt", "r") as file:
+with open(EXTRACTED_KB_ID, "r") as file:
     retriever_id = file.read()
 
 
@@ -69,31 +78,7 @@ def generate_response_custom_model(template, config, model, temperature, top_p):
         temperature=temperature,
         top_p=top_p,
     )
-
-    new_config = {
-        "vectorSearchConfiguration": {
-            "numberOfResults": 3,
-            "overrideSearchType": "HYBRID",
-        }
-    }
-
     custom_chain_builder.update_kb_retrieval_config(new_config=config)
-
-    new_template = """Human: You are a product salesperson AI system that specializes specifically in email correspondence.
-            Use the following pieces of information to be provided by the {{ context }} a concise answer to the question enclosed in {{ question }} tags.
-            The answer structure should be starting with reaching back the person that asked the question and followed by answering the question,
-            and finishing with polite ending
-            The answer should be written in a human-centric, keep it simple, no need for high-end words
-
-            If no information can be found try to bring any useful information you can, even if they are not based on the facts provided.
-
-            CONTEXT: {% for doc in context %}
-                        {{ doc.page_content }}
-                    {% endfor %}
-
-            USER: {{ question }}
-            """
-
     custom_chain_builder.update_prompt_template(new_template=template)
 
     return custom_chain_builder
@@ -127,7 +112,7 @@ new_template = """Human: You are a product salesperson AI system that specialize
 # Streamlit
 
 # Page title
-st.set_page_config(page_title="Ruby 💎 V0.0.10 - Multi Selection")
+st.set_page_config(page_title="Streamlit chatbot Multi Selection")
 
 
 # Clear Chat History function
@@ -139,7 +124,7 @@ def clear_screen():
 # Side bar for the custom metrics selection and model selection
 # Sub models here reference the free roam custom chain build or the default ChainBuilder
 with st.sidebar:
-    st.title("Ruby 💎 V0.0.10 - Multi Selection")
+    st.title("Streamlit chatbot Multi Selection")
     st.button("Clear Screen", on_click=clear_screen)
 
     st.subheader("Models and parameters")

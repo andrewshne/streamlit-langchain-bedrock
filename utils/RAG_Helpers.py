@@ -3,9 +3,17 @@
 from typing import List, Dict  # Dictionary constructor
 from pydantic import BaseModel  # Data validator
 import io  # For report file read/write
+import os
+from dotenv import load_dotenv
 import re
 
+#Global configs
+load_dotenv()  # Load environment variables from .env file
 
+# Global variables
+# Taken from .env file otherwise default to local path
+REPORTS_DIR = os.getenv("REPORTS_DIR", "<LOCAL PATH FOR REPORTS DIR >")  # Directory for reports
+REPORTS_FILE_NAME = "accumulated_daily.txt"
 # ------------------------------------------------------
 # Utility func for dynamic s3 bucket location path
 
@@ -40,7 +48,7 @@ def extract_citations(context: List[Dict]) -> List[Citation]:
 def accumulated_daily(cb, dt):
     today_date_exists = False  # In case today date doesn't exists yet, create it with flag
     today_date = str(dt.date())
-    fname = ".\\Reports\\accumulated_daily.txt"  # Interchangeable to different path
+    fname = REPORTS_DIR + REPORTS_FILE_NAME  # Interchangeable to different path
     try:
         with io.open(fname, "r+", encoding="utf8") as f:
             lines = f.readlines()
