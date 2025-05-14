@@ -60,6 +60,10 @@ The accumulated helper function to create a daily report of the cost usage of th
 
 The first page and driver code for the main streamlit application
 
+---
+
+If you wish to run the solution by your self, clone this project and follow the instructions below
+
 ## Instructions to run
 
 ### Perquisites
@@ -95,3 +99,7 @@ after package installation and all perquisites have met run
 ```bash
 streamlit run streamlit-rag-main.py
 ```
+
+### IMPORTANT NOTE
+
+Before running on the application make sure that the retriever is ready with data synced already, for the scope of this project data will not be provided, this is up to whoever clones this repo and wish to run this solution, to BYOD(Bring Your Own Data).
